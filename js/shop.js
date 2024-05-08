@@ -98,13 +98,16 @@ function cleanCart() {
 }
 
 // Exercise 3
+
 function calculateTotal() {
+  let totalPrice = 0;
+
   for (obj of cart) {
-    total += obj.price * obj.quantity;
-    console.log(total);
+    totalPrice += obj.price * obj.quantity;
   }
+  console.log(totalPrice);
 }
-console.log(total);
+
 // Calculate total price of the cart using the "cartList" array
 
 // Exercise 4
