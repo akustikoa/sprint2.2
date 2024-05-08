@@ -87,14 +87,14 @@ function buy(id) {
   }
   console.log(cart);
   calculateTotal();
+  applyPromotionsCart();
   // 1. Loop for to the array products to get the item to add to cart
   // 2. Add found product to the cart array
 }
 
 // Exercise 2
 function cleanCart() {
-  cart.splice(0, cart.length);
-  console.log("buidatge cart ", cart);
+  cart = [];
 }
 
 // Exercise 3
@@ -102,18 +102,31 @@ function cleanCart() {
 function calculateTotal() {
   let totalPrice = 0;
 
-  for (obj of cart) {
-    totalPrice += obj.price * obj.quantity;
+  for (let product of cart) {
+    // totalPrice += product.price * product.quantity;
   }
   console.log(totalPrice);
+  return totalPrice;
 }
 
 // Calculate total price of the cart using the "cartList" array
 
 // Exercise 4
 function applyPromotionsCart() {
-  // Apply promotions to each item in the array "cart"
+  for (let product of cart) {
+    let totalPriceProduct = product.price + product.quantity;
+    if (product.offer) {
+      if (product.quantity >= product.offer.number) {
+        product.subtotalWithDiscount =
+          totalPriceProduct - totalPriceProduct * (product.offer.percent / 100);
+      } else {
+        product.subtotalWithDiscount = totalPriceProduct;
+      }
+    }
+    product.subtotalWithDiscount = totalPriceProduct;
+  }
 }
+// Apply promotions to each item in the array "cart"
 
 // Exercise 5
 function printCart() {
