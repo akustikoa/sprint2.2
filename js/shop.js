@@ -132,7 +132,17 @@ function applyPromotionsCart() {
 // Apply promotions to each item in the array "cart"
 
 // Exercise 5
+const getModal = document.getElementById("cart_list"); //dins de la funció ?
+
 function printCart() {
+  products.forEach((product) => {
+    let content = document.createElement("row");
+    content.innerHTML = `<th>${productFind}</th>`;
+    content.innerHTML = `<th>${product.price}</th>`;
+    content.innerHTML = `<th>${product.quantity}</th>`;
+    content.innerHTML = `<th>${totalPrice}</th>`;
+    console.log(content);
+  });
   // Fill the shopping cart modal manipulating the shopping cart dom
 }
 
