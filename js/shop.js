@@ -86,8 +86,9 @@ function buy(id) {
     productFind.quantity++;
   }
   console.log(cart);
-  calculateTotal();
   applyPromotionsCart();
+  calculateTotal();
+
   // 1. Loop for to the array products to get the item to add to cart
   // 2. Add found product to the cart array
 }
@@ -103,7 +104,7 @@ function calculateTotal() {
   let totalPrice = 0;
 
   for (let product of cart) {
-    // totalPrice += product.price * product.quantity;
+    totalPrice += product.subtotalWithDiscount;
   }
   console.log(totalPrice);
   return totalPrice;
@@ -114,7 +115,7 @@ function calculateTotal() {
 // Exercise 4
 function applyPromotionsCart() {
   for (let product of cart) {
-    let totalPriceProduct = product.price + product.quantity;
+    let totalPriceProduct = product.price * product.quantity;
     if (product.offer) {
       if (product.quantity >= product.offer.number) {
         product.subtotalWithDiscount =
@@ -122,10 +123,12 @@ function applyPromotionsCart() {
       } else {
         product.subtotalWithDiscount = totalPriceProduct;
       }
+    } else {
+      product.subtotalWithDiscount = totalPriceProduct;
     }
-    product.subtotalWithDiscount = totalPriceProduct;
   }
 }
+
 // Apply promotions to each item in the array "cart"
 
 // Exercise 5
