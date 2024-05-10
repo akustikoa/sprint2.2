@@ -72,8 +72,8 @@ var products = [
 // Improved version of cartList. Cart is an array of products (objects), but each one has a quantity
 // field to define its quantity, so these products are not repeated.
 var cart = [];
-
 var total = 0;
+var count = 0;
 
 // Exercise 1
 function buy(id) {
@@ -82,20 +82,23 @@ function buy(id) {
   if (cart.indexOf(productFind) === -1) {
     productFind.quantity = 1;
     cart.push(productFind);
+    count++;
   } else {
     productFind.quantity++;
-  }
-  console.log(cart);
-  applyPromotionsCart();
-  calculateTotal();
+    count++;
+    applyPromotionsCart();
+    printCart();
 
-  // 1. Loop for to the array products to get the item to add to cart
-  // 2. Add found product to the cart array
+    // 1. Loop for to the array products to get the item to add to cart
+    // 2. Add found product to the cart array
+  }
 }
 
 // Exercise 2
 function cleanCart() {
   cart = [];
+  count = 0;
+  printCart();
 }
 
 // Exercise 3
@@ -132,17 +135,29 @@ function applyPromotionsCart() {
 // Apply promotions to each item in the array "cart"
 
 // Exercise 5
-const getModal = document.getElementById("cart_list"); //dins de la funció ?
 
 function printCart() {
-  products.forEach((product) => {
-    let content = document.createElement("row");
-    content.innerHTML = `<th>${productFind}</th>`;
-    content.innerHTML = `<th>${product.price}</th>`;
-    content.innerHTML = `<th>${product.quantity}</th>`;
-    content.innerHTML = `<th>${totalPrice}</th>`;
-    console.log(content);
+  const cartList = document.getElementById("cart_list");
+  cartList.innerHTML = "";
+
+  cart.forEach((product) => {
+    let content = document.createElement("tr");
+    content.innerHTML = `
+    <th scope="row">${product.name}</th>
+                  <td>${product.price}</td>
+                  <td>${product.quantity}</td>
+                  <td>${product.subtotalWithDiscount}</td>
+    `;
+    cartList.appendChild(content);
   });
+
+  let totalCArt = document.getElementById("total_price");
+  console.log("toal_price");
+  totalCArt.innerHTML = `${calculateTotal()}`;
+
+  let countProduct = document.getElementById("count_product");
+  countProduct.innerHTML = `${count}`;
+
   // Fill the shopping cart modal manipulating the shopping cart dom
 }
 
