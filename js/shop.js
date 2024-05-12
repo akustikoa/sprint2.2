@@ -147,6 +147,7 @@ function printCart() {
                   <td>${product.price}</td>
                   <td>${product.quantity}</td>
                   <td>${product.subtotalWithDiscount}</td>
+                  <td><button type="button" onClick="removeFromCart(${product.id})" class="btn btn-light d-flex justify-content-center"> <i class="fas fa-trash-alt ms-1 me-1"></i> </button></td>
     `;
     cartList.appendChild(content);
   });
@@ -164,7 +165,22 @@ function printCart() {
 // ** Nivell II **
 
 // Exercise 7
-function removeFromCart(id) {}
+function removeFromCart(id) {
+  let productIndex = cart.findIndex((product) => product.id === id);
+  let product = cart[productIndex];
+  if (product.quantity > 1) {
+    product.quantity--;
+    count--;
+    applyPromotionsCart();
+    calculateTotal();
+  } else {
+    cart.splice(productIndex, 1);
+    count--;
+    applyPromotionsCart();
+    calculateTotal();
+  }
+  printCart();
+}
 
 function open_modal() {
   printCart();
