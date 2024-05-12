@@ -36,7 +36,7 @@ function validate(event) {
     fName.classList.remove("is-invalid");
   }
 
-  if (fPhoneTrim.length < 3 || !phoneRegex.test(fPhoneTrim)) {
+  if (fPhoneTrim.length < 9 || !phoneRegex.test(fPhoneTrim)) {
     errorPhone.style.display = "block";
     fPhone.classList.add("is-invalid");
     isValid = false;
