@@ -1,5 +1,5 @@
 // If you have time, you can move this variable "products" to a json or js file and load the data in this js. It will look more professional
-var products = [
+let products = [
   {
     id: 1,
     name: "cooking oil",
@@ -71,34 +71,38 @@ var products = [
 
 // Improved version of cartList. Cart is an array of products (objects), but each one has a quantity
 // field to define its quantity, so these products are not repeated.
-var cart = [];
-var total = 0;
-var count = 0;
+let cart = [];
+let count = 0;
 
 // Exercise 1
 function buy(id) {
-  let productFind = products.find((product) => product.id === id); //troba el producte
+  let productFind = products.find((product) => product.id === id); //troba el primer producte que coincideixi amb la id
 
   if (cart.indexOf(productFind) === -1) {
-    productFind.quantity = 1;
-    cart.push(productFind);
+    //de l'array cart busquem el primer index si coincideix amb -1 no es troba
+    productFind.quantity = 1; // iniciem producte
+    cart.push(productFind); //afegim producte
     count++;
   } else {
     productFind.quantity++;
     count++;
-    applyPromotionsCart();
-    printCart();
-
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cart array
   }
+  applyPromotionsCart();
+  printCart();
 }
 
 // Exercise 2
 function cleanCart() {
-  cart = [];
-  count = 0;
-  printCart();
+  let confirmation = confirm("Are you sur you want to empty the cart?");
+  if (confirmation) {
+    cart = []; //buidem el carro
+    count = 0; //comptador a 0
+    printCart();
+  } else {
+    alert("Nothing has been emptied");
+  }
 }
 
 // Exercise 3
@@ -107,10 +111,10 @@ function calculateTotal() {
   let totalPrice = 0;
 
   for (let product of cart) {
-    totalPrice += product.subtotalWithDiscount;
+    // iterem els productes del cart
+    totalPrice += product.subtotalWithDiscount; //afegim al total acumulat, el preu amb descompte del nou article
   }
-  console.log(totalPrice);
-  return totalPrice;
+  return totalPrice.toFixed(2); // retallem a dos decimals
 }
 
 // Calculate total price of the cart using the "cartList" array
@@ -118,16 +122,19 @@ function calculateTotal() {
 // Exercise 4
 function applyPromotionsCart() {
   for (let product of cart) {
-    let totalPriceProduct = product.price * product.quantity;
+    // itera l'item product de l'array cart
+    let totalPriceProduct = product.price * product.quantity; // multipliquem el preu i la quantitat del prod. per saber el preu
     if (product.offer) {
+      //si té un camp offer
       if (product.quantity >= product.offer.number) {
+        // i la quantitat es més gran o igual al numero minim per oferta
         product.subtotalWithDiscount =
-          totalPriceProduct - totalPriceProduct * (product.offer.percent / 100);
+          totalPriceProduct - totalPriceProduct * (product.offer.percent / 100); //resta el tant per cent que digui el camp percent dividint-lo per 100
       } else {
-        product.subtotalWithDiscount = totalPriceProduct;
+        product.subtotalWithDiscount = totalPriceProduct; // sinó deixa'l sense descompte
       }
     } else {
-      product.subtotalWithDiscount = totalPriceProduct;
+      product.subtotalWithDiscount = totalPriceProduct; // sinó deixa'l sense descompte
     }
   }
 }
@@ -137,13 +144,14 @@ function applyPromotionsCart() {
 // Exercise 5
 
 function printCart() {
-  const cartList = document.getElementById("cart_list");
-  cartList.innerHTML = "";
+  const cartList = document.getElementById("cart_list"); // agafem la id del body de la taula on afegirem l'html dinàmic
+  cartList.innerHTML = ""; //buido cart list
 
   cart.forEach((product) => {
-    let content = document.createElement("tr");
+    // iterem amb el forEach
+    let content = document.createElement("tr"); // creem la fila
     content.innerHTML = `
-    <th scope="row">${product.name}</th>
+    <th scope = "row">${product.name}</th>
                   <td>${product.price}</td>
                   <td>${product.quantity}</td>
                   <td>${product.subtotalWithDiscount}</td>
@@ -152,9 +160,8 @@ function printCart() {
     cartList.appendChild(content);
   });
 
-  let totalCArt = document.getElementById("total_price");
-  console.log("toal_price");
-  totalCArt.innerHTML = `${calculateTotal()}`;
+  let totalCart = document.getElementById("total_price");
+  totalCart.innerHTML = `${calculateTotal()}`;
 
   let countProduct = document.getElementById("count_product");
   countProduct.innerHTML = `${count}`;
