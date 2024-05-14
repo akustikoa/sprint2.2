@@ -26,7 +26,6 @@ function validate(event) {
 
   let isValid = true;
 
-  // Validate fields entered by the user: name, phone, password, and email
   if (fNameTrim.length < 3 || !nameRegex.test(fNameTrim)) {
     errorName.style.display = "block";
     fName.classList.add("is-invalid");
